@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final DataSource dataSource;
+    private DataSource dataSource;
 
     @Bean
     public PasswordEncoder encoder() {
@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true);
 
         http.authorizeRequests()
-                .antMatchers("/login", "/css/login.css", "/forgot-password").permitAll()
+                .antMatchers("/login", "/css/login.css", "/forgot-password", "/").permitAll()
                 .antMatchers("/**")
                 .authenticated()
                 .and()
@@ -60,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery(fetchRolesQuery)
                 .dataSource(dataSource);
     }
-    
+
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return new MyAccessDeniedHandler();
