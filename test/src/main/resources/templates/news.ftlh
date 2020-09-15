@@ -4,44 +4,12 @@
 <@main.renderWith styles=["/css/cards.css"]>
 
     <div class="container my-5">
-        <#if todayNews??>
-            <div class="row row-cols-1 justify-content-between row-cols-md-3">
-                <#list todayNews.content as news>
-                    <a href="/news/${news.id}" class="card mb-3 mr-1" style="max-width: 540px; text-decoration: none;">
-                        <div class="row no-gutters">
-                            <div class="col-md-4 col-sm-2">
-                                <img src="/img/${news.image}" class="card-img" alt="no-image">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">${news.title}</h5>
-                                    <p class="card-text clip">${news.descr}</p>
-                                    <p class="card-text d-flex"><small class="text-muted">${news.date}</small> <small class="text-muted ml-auto">${news.user.name}</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </#list>
-            </div>
-            <@p.pager url todayNews />
-        </#if>
-    </div>
+        <#if news??>
+            <#if news.author == true>
+            ok
+            <#else > no
+            </#if>
 
-    <div class="container px-0">
-        <#if lastArchiveNews??>
-            <div class="card mx-0">
-                <div class="card-body">
-                    <h5 class="card-title text-center">Archive news</h5>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <#list lastArchiveNews as an>
-                        <li class="list-group-item archive-clip">${an.descr}</li>
-                    </#list>
-                </ul>
-                <div class="card-body text-center">
-                    <a href="#" class="card-link">All archive news</a>
-                </div>
-            </div>
         </#if>
     </div>
 

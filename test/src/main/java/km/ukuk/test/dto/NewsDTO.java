@@ -18,6 +18,8 @@ public class NewsDTO {
     private String image;
     private String date;
     private UserDTO user;
+    @Builder.Default
+    private boolean isAuthor = false;
 
     public static NewsDTO from(News news) {
         return builder()

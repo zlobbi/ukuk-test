@@ -36,11 +36,11 @@ public class MainContlorller {
         return "index";
     }
 
-    @GetMapping("/news/{id]")
-    public String oneNews(Model model, Principal principal, @PathVariable int id) {
+    @GetMapping("/news/{id}")
+    public String oneNews(Model model, Principal principal, @PathVariable("id") int id) {
         userService.addPrincipal(model, principal);
         var news = newsService.getById(id);
-        model.addAttribute(news);
+        model.addAttribute("news", news);
         return "news";
     }
 

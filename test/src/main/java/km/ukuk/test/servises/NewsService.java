@@ -8,8 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.security.Security;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +31,9 @@ public class NewsService {
     }
 
     public NewsDTO getById(int id) {
-        return NewsDTO.from(newsRepo.findById(id).get());
+        var news = NewsDTO.from(newsRepo.findById(id).get());
+        String principal = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (principal.equals(news.getUser().getLogin())) news.setAuthor(true);
+        return news;
     }
 }
