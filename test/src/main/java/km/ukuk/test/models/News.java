@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Data
 @Table(name = "news")
@@ -26,6 +27,9 @@ public class News {
 
     @Column
     private String image;
+
+    @Column
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
