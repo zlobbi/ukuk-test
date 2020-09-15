@@ -1,5 +1,6 @@
 package km.ukuk.test.repositories;
 
+import km.ukuk.test.dto.NewsDTO;
 import km.ukuk.test.models.News;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

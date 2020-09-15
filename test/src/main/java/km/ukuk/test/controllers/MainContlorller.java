@@ -10,7 +10,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -34,6 +34,14 @@ public class MainContlorller {
         model.addAttribute("url", uri);
 
         return "index";
+    }
+
+    @GetMapping("/news/{id]")
+    public String oneNews(Model model, Principal principal, @PathVariable int id) {
+        userService.addPrincipal(model, principal);
+        var news = newsService.getById(id);
+        model.addAttribute(news);
+        return "news";
     }
 
 }

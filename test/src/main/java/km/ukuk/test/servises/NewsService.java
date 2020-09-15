@@ -1,6 +1,6 @@
 package km.ukuk.test.servises;
 
-import km.ukuk.test.models.News;
+import km.ukuk.test.dto.NewsDTO;
 import km.ukuk.test.repositories.NewsRepo;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,18 +12,23 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class NewsService {
     private NewsRepo newsRepo;
 
-    public Page<News> getTodayNews(LocalDate date, Pageable pageable) {
-        return newsRepo.findAllByDate(date, pageable);
+    public Page<NewsDTO> getTodayNews(LocalDate date, Pageable pageable) {
+        return newsRepo.findAllByDate(date, pageable).map(NewsDTO::from);
     }
 
-    public List<News> getLastArchiveNews(LocalDate date) {
+    public List<NewsDTO> getLastArchiveNews(LocalDate date) {
         Pageable pageable = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "id"));
-        return newsRepo.findAllByDateBefore(date, pageable);
+        return newsRepo.findAllByDateBefore(date, pageable).stream().map(NewsDTO::from).collect(Collectors.toList());
+    }
+
+    public NewsDTO getById(int id) {
+        return NewsDTO.from(newsRepo.findById(id).get());
     }
 }

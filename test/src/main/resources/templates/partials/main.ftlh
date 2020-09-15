@@ -26,7 +26,7 @@
                 <div class="row">
                     <#if admin??>
                         <a href="/admin-page" class="btn mr-auto border rounded btn-light">Админка</a>
-                    <#else> <p class="" style="text-transform:uppercase;">Авторизован: ${user}</p>
+                    <#else> <p class="" style="text-transform:uppercase;">Авторизован: ${user.name  }</p>
                     </#if>
                     <form action="/logout" method="post" class="exit-form ml-auto">
                         <#if _csrf??>
@@ -44,7 +44,7 @@
         <script src="${scriptSource}"></script>
     </#list>
 
-    <div class="main container">
+    <div>
         <#nested>
     </div>
 

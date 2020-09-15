@@ -16,8 +16,8 @@ public class UserService {
 
     public void addPrincipal(Model model, Principal principal) {
         if (principal != null) {
-            User user = userRepo.findByLogin(principal.getName());
-            model.addAttribute("userName", user.getLogin());
+            var user = userRepo.findByLogin(principal.getName());
+            model.addAttribute("user", user);
         }
     }
 
