@@ -28,7 +28,7 @@ public class User {
     private String surname;
 
     @Column
-    private LocalDate birthDate;
+    private LocalDate birthdate;
 
     @Column
     private String login;

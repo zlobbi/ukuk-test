@@ -20,4 +20,8 @@ public class UserService {
             model.addAttribute("userName", user.getLogin());
         }
     }
+
+    public User getById(int i) {
+        return userRepo.findById(i).get();
+    }
 }

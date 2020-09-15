@@ -24,21 +24,16 @@ public class MainContlorller {
 
     @GetMapping
     public String main(Model model, Principal principal, HttpServletRequest uriBuilder,
-                       @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+                       @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 6) Pageable pageable) {
         var uri = uriBuilder.getRequestURI();
-        var todayNews = newsService.getToDayNews(LocalDate.now(), pageable);
+        var todayNews = newsService.getTodayNews(LocalDate.now(), pageable);
         var archiveNews = newsService.getLastArchiveNews(LocalDate.now());
         userService.addPrincipal(model, principal);
         model.addAttribute("todayNews", todayNews);
         model.addAttribute("lastArchiveNews", archiveNews);
         model.addAttribute("url", uri);
-        return "index";
-    }
 
-    @GetMapping("/login")
-    public String loginPage(@RequestParam(required = false, defaultValue = "false") Boolean error, Model model) {
-        model.addAttribute("error", error);
-        return "sign-in";
+        return "index";
     }
 
 }

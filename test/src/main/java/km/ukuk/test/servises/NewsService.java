@@ -18,12 +18,12 @@ import java.util.List;
 public class NewsService {
     private NewsRepo newsRepo;
 
-    public Page<News> getToDayNews(LocalDate date, Pageable pageable) {
+    public Page<News> getTodayNews(LocalDate date, Pageable pageable) {
         return newsRepo.findAllByDate(date, pageable);
     }
 
     public List<News> getLastArchiveNews(LocalDate date) {
-        Pageable pageable = PageRequest.of(0, 7, Sort.by(Sort.Direction.DESC, "id"));
+        Pageable pageable = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "id"));
         return newsRepo.findAllByDateBefore(date, pageable);
     }
 }

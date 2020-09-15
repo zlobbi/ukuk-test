@@ -11,11 +11,9 @@ CREATE TABLE users (
 );
 
 create table user_roles (
-  user_role_id SERIAL PRIMARY KEY,
   user_id int NOT NULL,
-  role varchar(20) NOT NULL,
-  UNIQUE (user_id,role),
-  constraint fk_user
+  roles varchar(20) NOT NULL,
+  constraint role_fk
   FOREIGN KEY (user_id) REFERENCES users (id)
 );
 

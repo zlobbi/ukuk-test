@@ -1,0 +1,215 @@
+ body {
+     font-size: 14px;
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+ }
+
+ li {
+     list-style-type: none; /* Убираем маркеры */
+ }
+
+ ul {
+     margin-left: 0; /* Отступ слева в браузере IE и Opera */
+     padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
+ }
+.link-logo, a:hover{
+    color:#fff;
+}
+
+ body .list-group a:hover{
+     color: #fff;
+     text-decoration: none;
+ }
+
+
+.header {
+    background-color: #373c44;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+}
+.navbar-brand {
+    font-size: 30px;
+    font-weight: 400;
+    color: #fff;
+    text-transform: uppercase;
+}
+.navbar-brand b {
+    font-weight: 900;
+}
+.nav-link {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+}
+.nav-link:hover,
+.btn-su:hover {
+    color: #ccc;
+}
+.nav-link a:active{
+    color: #c6b2c3;
+}
+
+.nav-link {
+    color: #ccc;
+}
+ /* The sidebar menu */
+ .sidenav {
+     height: 45%; /* Full-height: remove this if you want "auto" height */
+     width: 160px; /* Set the width of the sidebar */
+     position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+     z-index: 1; /* Stay on top */
+     top: 70px; /* Stay at the top */
+     left: 0;
+     background-color: #343a40; /* Black */
+     border-radius: 0px 10px 10px 0px;
+     overflow-x: hidden; /* Disable horizontal scroll */
+     padding-top: 20px;
+ }
+
+ /* The navigation menu links */
+ .sidenav a {
+     padding: 6px 8px 6px 16px;
+     text-decoration: none;
+     font-family: verdana;
+     font-size: 20px;
+     color: #818181;
+     display: block;
+ }
+
+ /* When you mouse over the navigation links, change their color */
+ .sidenav a:hover {
+     color: #f1f1f1;
+ }
+ /*.sidenav {padding-top: 15px;}*/
+ /*.sidenav a {font-size: 18px;}*/
+
+ /* Style page content */
+ .main {
+     margin-left: 160px; /* Same as the width of the sidebar */
+     padding: 0px 10px;
+ }
+
+.btn-su {
+    background-color: #373c44;
+    border: 1px solid #fff;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    border-radius: 2px;
+    padding: 4px;
+}
+
+
+.username {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.footer {
+    background-color: #373c44;
+    font-size: 14px;
+    font-weight: 400;
+    color: #aeb0b2;
+    text-align: right;
+}
+.footer em {
+    text-transform: none;
+    margin-left: 40px;
+    font-style: normal;
+}
+.sbch,
+.su-foot {
+    background-color: #373c44;
+    color: #fff;
+}
+.sf-btn {
+    color: #fff;
+}
+
+.field{
+	width: 100%;
+    /*display: inline-block;*/
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	font-size: 14px;
+}
+
+.search-p{
+    display: inline-block;
+    margin: 5px 5px;
+}
+
+.auto-title{
+	color: white;
+	padding-left: 110px;
+	padding-bottom: 0px;
+	padding-top: 0px;
+	text-transform: uppercase;
+}
+.modal-btn{
+	background-color: #343a40;
+	color: #28a745;
+	padding: 5px 10px;
+	font-size: 15px;
+	margin-right: auto;
+	margin-left: auto;
+	border-width: 2px;
+}
+.footer-color{
+	background-color: #141414
+}
+.footer{
+	font-size: 12px;
+	color: #e0e0e0;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+.card-header{
+	background-color: #343a40;
+	color: white;
+}
+.card{
+	border-width: 2px;
+	border-radius: 3%;
+	border-color: #343a40;
+}
+.name{
+	font-family: Times;
+	color: #343a40;
+}
+
+
+.detail-client:hover {
+    background-color: #4e555b;
+    color: #fff3cd;
+}
+
+ .detail-client:hover {
+     background-color: #4e555b;
+     color: #fff3cd;
+ }
+
+/*============= 403 ====================*/
+
+ .error-heading{
+     margin: 50px auto;
+     width: 250px;
+     border: 5px solid #fff;
+     font-size: 126px;
+     line-height: 126px;
+     border-radius: 30px;
+     text-shadow: 6px 6px 5px #000;
+ }
+ .error-heading img{
+     width: 100%;
+ }
+ .error-main h1{
+     font-size: 72px;
+     margin: 0px;
+     color: green;
+     text-shadow: 0px 0px 5px #fff;
+ }

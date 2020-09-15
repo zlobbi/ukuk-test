@@ -26,7 +26,7 @@
             <#if _csrf??>
                 <input type="hidden" name="${(_csrf.parameterName)!'csrf'}" value="${(_csrf.token)!'--no-token--'}"/>
             </#if>
-            <input type="email" id="login" class="fadeIn second" name="username" placeholder="email" required>
+            <input type="login" id="login" class="fadeIn second" name="username" placeholder="email" required>
             <input type="password" id="password" class="fadeIn third pwd" name="password" placeholder="пароль" required>
             <span class="input-group-btn" style="display: inline">
                 <button class="btn btn-default reveal" type="button" style="padding: 14px 11px; margin-bottom: 2px; margin-left: -44px">

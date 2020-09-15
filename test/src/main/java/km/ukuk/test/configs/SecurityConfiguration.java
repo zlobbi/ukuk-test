@@ -10,13 +10,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
 
 @Configuration
 @AllArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     private DataSource dataSource;
 
@@ -38,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true);
 
         http.authorizeRequests()
-                .antMatchers("/login", "/css/login.css", "/forgot-password", "/").permitAll()
+                .antMatchers("/login", "/css/**", "/img/**", "/").permitAll()
                 .antMatchers("/**")
                 .authenticated()
                 .and()
@@ -48,17 +50,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         String fetchUsersQuery = "select login, password, enabled"
-                + " from abc_system.users"
-                + " where email = ?";
+                + " from users"
+                + " where login=?";
 
         String fetchRolesQuery = "select u.login, ur.roles from users u" +
-                " inner join user_roles ur on u.id=ur.user_id where u.email = ?";
-
+                " inner join user_roles ur on u.id=ur.user_id where u.login = ?";
 
         auth.jdbcAuthentication()
                 .usersByUsernameQuery(fetchUsersQuery)
                 .authoritiesByUsernameQuery(fetchRolesQuery)
                 .dataSource(dataSource);
+    }
+
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations("classpath:/static/images/");
     }
 
     @Bean
