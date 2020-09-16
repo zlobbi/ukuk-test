@@ -17,7 +17,7 @@ import java.time.LocalDate;
 
 @Controller
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class MainContlorller {
+public class MainController {
     private UserService userService;
     private NewsService newsService;
 
@@ -28,10 +28,11 @@ public class MainContlorller {
         var todayNews = newsService.getTodayNews(LocalDate.now(), pageable);
         var archiveNews = newsService.getLastArchiveNews(LocalDate.now());
         userService.addPrincipal(model, principal);
-        model.addAttribute("todayNews", todayNews);
         model.addAttribute("lastArchiveNews", archiveNews);
-        model.addAttribute("url", uri);
-
+        if (todayNews.hasContent()) {
+            model.addAttribute("todayNews", todayNews);
+            model.addAttribute("url", uri);
+        }
         return "index";
     }
 

@@ -1,7 +1,7 @@
 <#import "partials/main.ftlh" as main />
 <#import "partials/pager.ftlh" as p />
 
-<@main.renderWith styles=["/css/cards.css"] scripts=["/js/profile.js"]>
+<@main.renderWith styles=["/css/cards.css"]>
 
     <div class="my-5 row">
         <div class="card col-3 px-0 ml-0">
@@ -36,13 +36,23 @@
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-me" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="p-4 my-3 border rounded">
+                        <#if update?? && update == false>
+                            <div class="alert alert-danger d-block" role="alert">
+                                No value presented for field About me!
+                            </div>
+                        </#if>
                         <p>${user.abMe!'no info!'}</p>
+                        <div class="row ml-auto px-3">
+                            <button type="button" class="btn ml-auto mr-1 btn-primary" data-toggle="modal"
+                                    data-target="#editAbMeModal">
+                                edit
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="nav-news" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <#if userLastNews??>
                         <div class="p-4 my-3 border rounded">
-
                             <div class="row row-cols-1">
                                 <#list userLastNews as news>
                                     <a href="/news/${news.id}" class="card mb-3 mr-1"
@@ -60,13 +70,47 @@
                                         </div>
                                     </a>
                                 </#list>
+                                <div class="row ml-auto px-3">
+                                    <button type="button" class="btn ml-auto d-flex mr-1 btn-primary"
+                                            data-toggle="modal" data-target="#addNewsModal">
+                                        Add news
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </#if>
                 </div>
             </div>
         </div>
-
     </div>
+    <div class="modal fade" id="editAbMeModal" tabindex="-1" role="dialog" aria-labelledby="editAbMeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editAbMeModalLabel">New info about you.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/edit-about-me/${user.id}">
+                        <#if _csrf??>
+                            <input type="hidden" class="field" name="${(_csrf.parameterName)!'csrf'}"
+                                   value="${(_csrf.token)!'--no-token--'}"/>
+                        </#if>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">About me:</label>
+                            <textarea class="form-control" name="abMe" id="message-text"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Send message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 </@main.renderWith>

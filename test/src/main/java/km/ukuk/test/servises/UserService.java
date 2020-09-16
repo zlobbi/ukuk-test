@@ -24,4 +24,15 @@ public class UserService {
     public UserDTO getById(int i) {
         return UserDTO.from(userRepo.findById(i).get());
     }
+
+    public boolean updateAbMe(String abMe, int id) {
+        if (!abMe.isBlank()) {
+            var user = userRepo.findById(id).get();
+            user.setAbMe(abMe);
+            userRepo.save(user);
+            return true;
+        }
+        return false;
+
+    }
 }

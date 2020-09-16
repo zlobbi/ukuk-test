@@ -37,8 +37,10 @@ public class NewsController {
         var uri = uriBuilder.getRequestURI();
         var archiveNews = newsService.getArchiveNews(LocalDate.now(), pageable);
         userService.addPrincipal(model, principal);
-        model.addAttribute("archiveNews", archiveNews);
-        model.addAttribute("url", uri);
+        if (archiveNews.hasContent()) {
+            model.addAttribute("archiveNews", archiveNews);
+            model.addAttribute("url", uri);
+        }
 
         return "archive";
     }
@@ -49,8 +51,10 @@ public class NewsController {
         var uri = uriBuilder.getRequestURI();
         var userNews = newsService.getUserNewsPageable(userId, pageable);
         userService.addPrincipal(model, principal);
-        model.addAttribute("archiveNews", userNews);
-        model.addAttribute("url", uri);
+        if (userNews.hasContent()) {
+            model.addAttribute("archiveNews", userNews);
+            model.addAttribute("url", uri);
+        }
 
         return "archive";
 
