@@ -6,6 +6,7 @@ CREATE TABLE users (
 	login VARCHAR ( 50 ) UNIQUE NOT NULL,
 	password VARCHAR ( 200 ),
 	ab_me TEXT,
+	image varchar (40) default 'no-image.jpg',
 	address varchar (244),
 	enabled boolean default true
 );
@@ -22,7 +23,7 @@ create table news (
     title varchar (200) not null,
     date date not null,
     descr TEXT not null,
-    image varchar (40) not null,
+    image varchar (40) default 'no-image.jpg',
     user_id int not null,
     constraint user_fk
     FOREIGN KEY (user_id) REFERENCES users (id)

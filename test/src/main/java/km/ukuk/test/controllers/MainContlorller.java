@@ -10,7 +10,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -34,26 +33,6 @@ public class MainContlorller {
         model.addAttribute("url", uri);
 
         return "index";
-    }
-
-    @GetMapping("/news/{id}")
-    public String oneNews(Model model, Principal principal, @PathVariable("id") int id) {
-        userService.addPrincipal(model, principal);
-        var news = newsService.getById(id);
-        model.addAttribute("news", news);
-        return "news";
-    }
-
-    @GetMapping("/archive-news")
-    public String archiveNews(Model model, Principal principal, HttpServletRequest uriBuilder,
-                              @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 6) Pageable pageable) {
-        var uri = uriBuilder.getRequestURI();
-        var archiveNews = newsService.getArchiveNews(LocalDate.now(), pageable);
-        userService.addPrincipal(model, principal);
-        model.addAttribute("archiveNews", archiveNews);
-        model.addAttribute("url", uri);
-
-        return "archive";
     }
 
 }

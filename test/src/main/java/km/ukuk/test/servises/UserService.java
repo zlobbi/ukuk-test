@@ -1,7 +1,6 @@
 package km.ukuk.test.servises;
 
 import km.ukuk.test.dto.UserDTO;
-import km.ukuk.test.models.User;
 import km.ukuk.test.repositories.UserRepo;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,7 +21,7 @@ public class UserService {
         }
     }
 
-    public User getById(int i) {
-        return userRepo.findById(i).get();
+    public UserDTO getById(int i) {
+        return UserDTO.from(userRepo.findById(i).get());
     }
 }

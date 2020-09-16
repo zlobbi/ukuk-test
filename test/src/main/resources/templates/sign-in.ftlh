@@ -4,8 +4,8 @@
     <div class="container">
         <div class="alert alert-danger text-center" role="alert" style="margin-top: 20px; align-content: center">
             <div style="max-width: 300px;" class="text-left">
-                <p>ADMIN : login: admin, password: 11111111 </p>
-                <p>USER: login: user, password: 11111111</p>
+                <p>ADMIN : admin, 11111111 </p>
+                <p>USER : user, 11111111</p>
             </div>
         </div>
         <div class="wrapper fadeInDown">

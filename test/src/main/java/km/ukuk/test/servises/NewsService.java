@@ -39,4 +39,9 @@ public class NewsService {
     public Page<NewsDTO> getArchiveNews(LocalDate now, Pageable pageable) {
         return newsRepo.findAllByDateBefore(now, pageable).map(NewsDTO::from);
     }
+
+    public List<NewsDTO> getUserLastNews(int id) {
+        Pageable pageable = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "id"));
+        return newsRepo.findAllByUserId(id, pageable).stream().map(NewsDTO::from).collect(Collectors.toList());
+    }
 }

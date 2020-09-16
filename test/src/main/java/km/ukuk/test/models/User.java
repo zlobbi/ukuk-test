@@ -43,6 +43,9 @@ public class User {
     private String address;
 
     @Column
+    private String image;
+
+    @Column
     @Builder.Default
     private boolean enabled = true;
 

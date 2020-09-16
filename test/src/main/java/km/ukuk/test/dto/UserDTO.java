@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -19,7 +20,10 @@ public class UserDTO {
     private String login;
     private String birthdate;
     private String abMe;
+    private String image;
+    private String address;
     private Role role;
+    private int newsCount;
 
     public static UserDTO from(User user) {
         return builder()
@@ -29,7 +33,10 @@ public class UserDTO {
                 .login(user.getLogin())
                 .birthdate(user.getBirthdate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")))
                 .abMe(user.getAbMe())
+                .image(user.getImage())
+                .address(user.getAddress())
                 .role(user.getRoles().iterator().next())
+                .newsCount(user.getNews().size())
                 .build();
     }
 }
