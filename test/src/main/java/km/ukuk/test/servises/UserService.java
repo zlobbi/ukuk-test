@@ -1,5 +1,6 @@
 package km.ukuk.test.servises;
 
+import km.ukuk.test.dto.UserDTO;
 import km.ukuk.test.models.User;
 import km.ukuk.test.repositories.UserRepo;
 import lombok.AccessLevel;
@@ -16,7 +17,7 @@ public class UserService {
 
     public void addPrincipal(Model model, Principal principal) {
         if (principal != null) {
-            var user = userRepo.findByLogin(principal.getName());
+            var user = UserDTO.from(userRepo.findByLogin(principal.getName()));
             model.addAttribute("user", user);
         }
     }
