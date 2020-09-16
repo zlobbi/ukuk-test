@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class News {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column

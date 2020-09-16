@@ -1,7 +1,10 @@
 package km.ukuk.test.servises;
 
+import km.ukuk.test.dto.NewsAddForm;
 import km.ukuk.test.dto.NewsDTO;
+import km.ukuk.test.models.News;
 import km.ukuk.test.repositories.NewsRepo;
+import km.ukuk.test.repositories.UserRepo;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -10,15 +13,22 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class NewsService {
     private NewsRepo newsRepo;
+    private UserRepo userRepo;
 
     public Page<NewsDTO> getTodayNews(LocalDate date, Pageable pageable) {
         return newsRepo.findAllByDate(date, pageable).map(NewsDTO::from);
@@ -47,5 +57,29 @@ public class NewsService {
 
     public Page<NewsDTO> getUserNewsPageable(int userId, Pageable pageable) {
         return newsRepo.findAllByUserId(userId, pageable).map(NewsDTO::from);
+    }
+
+    public void saveNews(NewsAddForm form, MultipartFile image) {
+        var news = new News();
+        news.setImage("no-image.jpg");
+        if (!image.isEmpty()) {
+            String imageName = UUID.randomUUID() + image.getOriginalFilename();
+            var dir = new File("target/classes/static/images/" + imageName);
+            try {
+                var os = new FileOutputStream(dir);
+                os.write(image.getBytes());
+                news.setImage(imageName);
+                os.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        news.setUser(userRepo.findById(form.getUserId()).get());
+        news.setTitle(form.getTitle());
+        news.setDescr(form.getText());
+        news.setDate(LocalDate.now());
+        newsRepo.save(news);
     }
 }

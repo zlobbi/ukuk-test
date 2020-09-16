@@ -51,6 +51,18 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="nav-news" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <#if errors??>
+                        <div class="alert alert-danger d-block my-1" role="alert">
+                            <#list errors as er>
+                                <p>${er.defaultMessage}</p>
+                            </#list>
+                        </div>
+                    </#if>
+                    <#if isSaved?? && isSaved == true>
+                        <div class="alert alert-success d-block my-1" role="alert">
+                            <p>News added!</p>
+                        </div>
+                    </#if>
                     <#if userLastNews??>
                         <div class="p-4 my-3 border rounded">
                             <div class="row row-cols-1">
@@ -61,7 +73,7 @@
                                             <div class="col-2">
                                                 <img src="/img/${news.image}" class="card-img" alt="no-image">
                                             </div>
-                                            <div class="col-10">
+                                            <div class="col-10" style="width: 100%;">
                                                 <div class="card-body">
                                                     <h5 class="card-title">${news.title}</h5>
                                                     <p class="card-text clip">${news.descr}</p>
@@ -102,6 +114,38 @@
                         <div class="form-group">
                             <label for="message-text" class="col-form-label">About me:</label>
                             <textarea class="form-control" name="abMe" id="message-text"></textarea>
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Send message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addNewsModal" tabindex="-1" role="dialog" aria-labelledby="addNewsModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNewsModalLabel">Adding news!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/news/add" enctype="multipart/form-data">
+                        <#if _csrf??>
+                            <input type="hidden" class="field" name="${(_csrf.parameterName)!'csrf'}"
+                                   value="${(_csrf.token)!'--no-token--'}"/>
+                        </#if>
+                        <input name="userId" value="${user.id}" hidden>
+                        <div class="form-group">
+                            <label for="title-text" class="col-form-label">Title:</label>
+                            <input class="form-control" name="title" id="title-text">
+                            <label for="message-text" class="col-form-label">Text:</label>
+                            <textarea class="form-control" name="text" id="message-text"></textarea>
+                            <label for="image" class="col-form-label">Image:</label>
+                            <input type="file" id="image" name="image">
                         </div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Send message</button>

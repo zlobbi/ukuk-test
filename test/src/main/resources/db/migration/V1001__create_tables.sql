@@ -23,8 +23,8 @@ create table news (
     title varchar (200) not null,
     date date not null,
     descr TEXT not null,
-    image varchar (40) default 'no-image.jpg',
+    image varchar (255) default 'no-image.jpg',
     user_id int not null,
-    constraint user_fk
+    constraint user_id_fk
     FOREIGN KEY (user_id) REFERENCES users (id)
 );

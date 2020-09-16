@@ -1,5 +1,6 @@
 package km.ukuk.test.controllers;
 
+import km.ukuk.test.dto.NewsAddForm;
 import km.ukuk.test.servises.NewsService;
 import km.ukuk.test.servises.UserService;
 import lombok.AccessLevel;
@@ -9,10 +10,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDate;
 
@@ -57,7 +64,18 @@ public class NewsController {
         }
 
         return "archive";
+    }
 
+    @PostMapping("/news/add")
+    public String addNews(@Valid NewsAddForm form, BindingResult validationResult, RedirectAttributes attributes,
+                          @RequestParam("image") MultipartFile image) {
+        if (validationResult.hasErrors()) {
+            attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
+            return "redirect:/users/" + form.getUserId();
+        }
+        newsService.saveNews(form, image);
+        attributes.addFlashAttribute("isSaved", true);
+        return "redirect:/users/" + form.getUserId();
     }
 
 
