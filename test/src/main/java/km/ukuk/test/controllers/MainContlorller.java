@@ -44,4 +44,16 @@ public class MainContlorller {
         return "news";
     }
 
+    @GetMapping("/archive-news")
+    public String archiveNews(Model model, Principal principal, HttpServletRequest uriBuilder,
+                              @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 6) Pageable pageable) {
+        var uri = uriBuilder.getRequestURI();
+        var archiveNews = newsService.getArchiveNews(LocalDate.now(), pageable);
+        userService.addPrincipal(model, principal);
+        model.addAttribute("archiveNews", archiveNews);
+        model.addAttribute("url", uri);
+
+        return "archive";
+    }
+
 }

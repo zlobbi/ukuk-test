@@ -11,7 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.security.Security;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,5 +34,9 @@ public class NewsService {
         String principal = SecurityContextHolder.getContext().getAuthentication().getName();
         if (principal.equals(news.getUser().getLogin())) news.setAuthor(true);
         return news;
+    }
+
+    public Page<NewsDTO> getArchiveNews(LocalDate now, Pageable pageable) {
+        return newsRepo.findAllByDateBefore(now, pageable).map(NewsDTO::from);
     }
 }
