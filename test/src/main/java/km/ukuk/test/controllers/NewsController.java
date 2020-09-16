@@ -43,6 +43,19 @@ public class NewsController {
         return "archive";
     }
 
+    @GetMapping("/users/{id}/news")
+    public String userNews(Model model, Principal principal, HttpServletRequest uriBuilder, @PathVariable("id") int userId,
+                           @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 6) Pageable pageable) {
+        var uri = uriBuilder.getRequestURI();
+        var userNews = newsService.getUserNewsPageable(userId, pageable);
+        userService.addPrincipal(model, principal);
+        model.addAttribute("archiveNews", userNews);
+        model.addAttribute("url", uri);
+
+        return "archive";
+
+    }
+
 
 
 }

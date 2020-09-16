@@ -44,4 +44,8 @@ public class NewsService {
         Pageable pageable = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "id"));
         return newsRepo.findAllByUserId(id, pageable).stream().map(NewsDTO::from).collect(Collectors.toList());
     }
+
+    public Page<NewsDTO> getUserNewsPageable(int userId, Pageable pageable) {
+        return newsRepo.findAllByUserId(userId, pageable).map(NewsDTO::from);
+    }
 }

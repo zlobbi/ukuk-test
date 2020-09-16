@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
