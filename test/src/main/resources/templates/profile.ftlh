@@ -32,7 +32,7 @@
                        aria-controls="nav-home" aria-selected="true">About me</a>
                     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-news" role="tab"
                        aria-controls="nav-profile" aria-selected="false">Last news</a>
-                    <#if users??>
+                    <#if userProfile?? && user?? && userProfile.role == 'ADMIN' && user.id == userProfile.id>
                         <a class="nav-item nav-link" id="nav-users-tab" data-toggle="tab" href="#nav-users" role="tab"
                            aria-controls="nav-users" aria-selected="false">Users</a>
                     </#if>
@@ -70,8 +70,8 @@
                             <p>News added!</p>
                         </div>
                     </#if>
-                    <#if userLastNews??>
-                        <div class="p-4 my-3 border rounded">
+                    <div class="p-4 my-3 border rounded">
+                        <#if userLastNews??>
                             <div class="row row-cols-1">
                                 <#list userLastNews as news>
                                     <a href="/news/${news.id}" class="card mb-3 mr-1"
@@ -90,17 +90,18 @@
                                         </div>
                                     </a>
                                 </#list>
-                                <div class="row ml-auto px-3">
-                                    <#if user?? && user.id == userProfile.id>
-                                        <button type="button" class="btn ml-auto d-flex mr-1 btn-primary"
-                                                data-toggle="modal" data-target="#addNewsModal">
-                                            Add news
-                                        </button>
-                                    </#if>
-                                </div>
+
                             </div>
+                        </#if>
+                        <div class="row ml-auto px-3">
+                            <#if user?? && user.id == userProfile.id>
+                                <button type="button" class="btn ml-auto d-flex mr-1 btn-primary"
+                                        data-toggle="modal" data-target="#addNewsModal">
+                                    Add news
+                                </button>
+                            </#if>
                         </div>
-                    </#if>
+                    </div>
                 </div>
                 <#if users??>
                     <div class="tab-pane fade" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab">

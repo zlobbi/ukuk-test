@@ -1,7 +1,7 @@
 CREATE TABLE users (
 	id serial PRIMARY KEY,
-	name varchar (10) not null,
-	surname varchar (20),
+	name varchar (30) not null,
+	surname varchar (30),
 	birthdate date ,
 	login VARCHAR ( 50 ) UNIQUE NOT NULL,
 	password VARCHAR ( 200 ),

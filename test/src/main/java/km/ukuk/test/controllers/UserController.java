@@ -4,6 +4,7 @@ import javassist.NotFoundException;
 import km.ukuk.test.dto.UserAddForm;
 import km.ukuk.test.dto.UserDTO;
 import km.ukuk.test.models.Role;
+import km.ukuk.test.models.User;
 import km.ukuk.test.servises.NewsService;
 import km.ukuk.test.servises.UserService;
 import lombok.AccessLevel;
@@ -75,9 +76,42 @@ public class UserController {
             attributes.addFlashAttribute("errors", validation.getFieldErrors());
             return "redirect:/add-user";
         }
+
+        if (userService.isUserExists(form.getLogin())) {
+            attributes.addFlashAttribute("exists", form.getLogin());
+            return "redirect:/add-user";
+        }
+
         var userId = userService.addNewUser(form);
 
         return "redirect:/users/" + userId;
+    }
+
+    @GetMapping("/user/{id}/update")
+    public String updateUser(Model model, Principal principal, @PathVariable("id") int id) {
+        userService.addPrincipal(model, principal);
+        try {
+            var user = userService.getById(id);
+            model.addAttribute("roles", Role.values());
+            model.addAttribute("userUp", user);
+            return "update-user";
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/forbidden";
+    }
+
+    @PostMapping("/update-user/{userId}")
+    public String updateUser(@PathVariable("userId") int id, @Valid UserAddForm form,
+                             RedirectAttributes attributes, BindingResult result) {
+        if (result.hasErrors()) {
+            attributes.addFlashAttribute("errors", result.getFieldErrors());
+            return "redirect:/user/" + id + "/update";
+        }
+        var userDTO = userService.updateUser(id, form);
+        if (userDTO != null)
+            return "redirect:/users/" + userDTO.getId();
+        return null;
     }
 
 }

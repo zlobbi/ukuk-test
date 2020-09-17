@@ -5,6 +5,7 @@ import km.ukuk.test.dto.UserAddForm;
 import km.ukuk.test.dto.UserDTO;
 import km.ukuk.test.models.Role;
 import km.ukuk.test.models.User;
+import km.ukuk.test.repositories.NewsRepo;
 import km.ukuk.test.repositories.UserRepo;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserService {
     private UserRepo userRepo;
+    private NewsRepo newsRepo;
     private PasswordEncoder encoder;
 
     public void addPrincipal(Model model, Principal principal) {
@@ -69,6 +71,10 @@ public class UserService {
         return userRepo.save(user).getId();
     }
 
+    public boolean isUserExists(String login) {
+        return userRepo.existsByLogin(login);
+    }
+
     public void addAddAdminParams(Model model, Principal principal) {
         if (principal != null) {
             User user = null;
@@ -84,5 +90,17 @@ public class UserService {
                 model.addAttribute("users", users);
             }
         }
+    }
+
+    public UserDTO updateUser(int userId, UserAddForm form) {
+        String name = form.getName();
+        String surname = form.getSurname();
+        LocalDate date = LocalDate.parse(form.getBirthdate());
+        String login = form.getLogin();
+        String password = encoder.encode(form.getPassword());
+        String address = form.getAddress();
+        String image = "no-image-profile.png";
+        userRepo.updateUser(name, surname, date, login, password, address, image, userId);
+        return UserDTO.from(userRepo.findById(userId).get());
     }
 }

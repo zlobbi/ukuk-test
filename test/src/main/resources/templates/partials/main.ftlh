@@ -25,7 +25,7 @@
             <#if user??>
                 <div class="row py-2">
                     <a href="/" class="btn mr-2 border rounded btn-light">Home</a>
-                    <a class="btn btn-light border rounded text-capitalize" href="/users/${user.id}">${user.name}</a>
+                    <a class="btn btn-light border rounded text-capitalize" href="/users/${user.id}">My page</a>
                     <form action="/logout" method="post" class="exit-form ml-auto">
                         <#if _csrf??>
                             <input type="hidden" name="${(_csrf.parameterName)!'csrf'}"
