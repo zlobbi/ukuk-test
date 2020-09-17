@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,15 +37,14 @@ public class UserController {
     public String profile(Model model, Principal principal, @PathVariable("id") int id) {
         userService.addPrincipal(model, principal);
         userService.addAddAdminParams(model, principal);
-        UserDTO user;
         try {
-            user = userService.getById(id);
+            UserDTO user = userService.getById(id);
+            model.addAttribute("userProfile", user);
             var userLastNews = newsService.getUserLastNews(id);
             if (userLastNews.size() != 0) {
-                model.addAttribute("userProfile", user);
                 model.addAttribute("userLastNews", userLastNews);
-                return "profile";
             }
+            return "profile";
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -63,17 +63,21 @@ public class UserController {
     @GetMapping("/add-user")
     public String addUser(Model model, Principal principal) {
         userService.addPrincipal(model, principal);
-        model.addAttribute("user-form", new UserAddForm());
+        model.addAttribute("userForm", new UserAddForm());
         model.addAttribute("roles", Role.values());
         return "add-user";
     }
 
     @PostMapping("/add-user")
-    public String addUser(@Valid UserAddForm form, RedirectAttributes attributes) {
-        attributes.addFlashAttribute("user-form", form);
-        var isAdded = userService.addNewUser(form);
+    public String addUser(@Valid UserAddForm form, BindingResult validation, RedirectAttributes attributes) {
+        attributes.addFlashAttribute("userForm", form);
+        if (validation.hasErrors()) {
+            attributes.addFlashAttribute("errors", validation.getFieldErrors());
+            return "redirect:/add-user";
+        }
+        var userId = userService.addNewUser(form);
 
-        return "add-user";
+        return "redirect:/users/" + userId;
     }
 
 }

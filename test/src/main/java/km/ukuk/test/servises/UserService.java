@@ -4,24 +4,36 @@ import javassist.NotFoundException;
 import km.ukuk.test.dto.UserAddForm;
 import km.ukuk.test.dto.UserDTO;
 import km.ukuk.test.models.Role;
+import km.ukuk.test.models.User;
 import km.ukuk.test.repositories.UserRepo;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.security.Principal;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserService {
     private UserRepo userRepo;
+    private PasswordEncoder encoder;
 
     public void addPrincipal(Model model, Principal principal) {
         if (principal != null) {
-            var user = UserDTO.from(userRepo.findByLogin(principal.getName()));
+            User user = null;
+            try {
+                user = userRepo.findByLogin(principal.getName()).orElseThrow(() -> new NotFoundException("User not found!"));
+            } catch (NotFoundException e) {
+                SecurityContextHolder.clearContext();
+                e.printStackTrace();
+            }
+            var userDTO = UserDTO.from(user);
             model.addAttribute("user", user);
         }
     }
@@ -43,14 +55,31 @@ public class UserService {
 
     }
 
-    public boolean addNewUser(UserAddForm form) {
-        return true;
+    public int addNewUser(UserAddForm form) {
+        var user = User.builder()
+                .name(form.getName())
+                .surname(form.getSurname())
+                .birthdate(LocalDate.parse(form.getBirthdate()))
+                .login(form.getLogin())
+                .password(encoder.encode(form.getPassword()))
+                .address(form.getAddress())
+                .roles(Set.of(Role.valueOf(form.getRole())))
+                .image("no-image-profile.png")
+                .build();
+        return userRepo.save(user).getId();
     }
 
     public void addAddAdminParams(Model model, Principal principal) {
         if (principal != null) {
-            var user = UserDTO.from(userRepo.findByLogin(principal.getName()));
-            if (user.getRole() == Role.ADMIN) {
+            User user = null;
+            try {
+                user = userRepo.findByLogin(principal.getName()).orElseThrow(() -> new NotFoundException("User not found!"));
+            } catch (NotFoundException e) {
+                SecurityContextHolder.clearContext();
+                e.printStackTrace();
+            }
+            var userDTO = UserDTO.from(user);
+            if (userDTO.getRole() == Role.ADMIN) {
                 var users = userRepo.findAllByIdIsNot(user.getId()).stream().map(UserDTO::from).collect(Collectors.toList());
                 model.addAttribute("users", users);
             }

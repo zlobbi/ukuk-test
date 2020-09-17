@@ -40,10 +40,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                 .invalidateHttpSession(true);
 
         http.authorizeRequests()
-                .antMatchers("/login", "/css/**", "/img/**", "/").permitAll()
+                .antMatchers("/login", "/css/**", "/img/**", "/js/**", "/").permitAll()
                 .antMatchers("/news-add", "/edit-about-me/**").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/add-user", "/update-user").hasAuthority("ADMIN")
-//                .antMatchers("/**").authenticated()
                 .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
     }

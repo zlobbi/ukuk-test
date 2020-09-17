@@ -116,7 +116,7 @@
                                         <tbody>
                                         <tr class="user-details" onclick="location.href='/user/${u.id}/update'">
                                             <td>${u.login!'no-login'}</td>
-                                            <td>${u.name!'no-name'} ${user.surname!'no-surname'}</td>
+                                            <td>${u.name!'no-name'} ${u.surname!'no-surname'}</td>
                                             <td>${u.birthdate}</td>
                                             <td>${u.role!"no-role"}</td>
                                             <td>${u.address!"no-address"}</td>
