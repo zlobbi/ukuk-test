@@ -8,4 +8,5 @@
 .user-details:hover {
     background-color: #39ace7;
     color: #fff3cd;
+    cursor: pointer;
 }

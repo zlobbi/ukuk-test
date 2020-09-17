@@ -115,7 +115,7 @@
                                     <th style="font-weight: bolder; font-size: 16px"> Address</th>
                                     <#list users as u>
                                         <tbody>
-                                        <tr class="user-details" onclick="location.href='/user/${u.id}/update'">
+                                        <tr class="user-details" onclick="location.href='/update-user/${u.id}'">
                                             <td>${u.login!'no-login'}</td>
                                             <td>${u.name!'no-name'} ${u.surname!'no-surname'}</td>
                                             <td>${u.birthdate}</td>

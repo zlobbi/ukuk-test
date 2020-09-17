@@ -4,7 +4,7 @@
 
     <div class="container p-5">
         <div class="formContent border border-dark mt-5">
-            <h2 class="my-3" style="font-size: 21px"> New user </h2>
+            <h2 class="my-3" style="font-size: 21px"> Update user </h2>
             <form action="/update-user/${userUp.id}" method="post" id="myform">
                 <div style="margin: 1rem">
                     <#if exists??>
@@ -45,6 +45,15 @@
                     <input id="password" type="password" class="fadeIn" name="password" required
                            placeholder="enter password">
                 </div>
+
+                <div class="d-flex justify-content-center">
+                    <div class="rounded py-3 birthdate">
+                        <#list roles as role>
+                            <input type="radio" id="${role}" name="role" value="${role}"> <label for="${role}">${role}</label>
+                        </#list>
+                    </div>
+                </div>
+
 
                 <input type="submit" class="fadeIn" style="margin-bottom: 15px" value="Update">
             </form>
