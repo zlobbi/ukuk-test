@@ -5,21 +5,22 @@
 
     <div class="my-5 row">
         <div class="card col-3 px-0 ml-0">
-            <#if user??>
-                <img src="/img/${user.image}" class="card-img-top" alt="no-image">
+            <#if userProfile??>
+                <img src="/img/${userProfile.image!'no-image-profile.jpg'}" class="card-img-top" alt="no-image">
                 <div class="card-body">
-                    <h5 class="card-title text-capitalize">${user.name!'name'} ${user.surname!'surname'}</h5>
-                    <p class="card-text clip">${user.abMe!'about me'}</p>
+                    <h5 class="card-title text-capitalize">${userProfile.name!'name'} ${userProfile.surname!'surname'}</h5>
+                    <p class="card-text clip">${userProfile.abMe!'about me'}</p>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex">Birthdate: <span
-                                class="ml-auto">${user.birthdate!'birthdate'}</span></li>
-                    <li class="list-group-item d-flex">Role: <span class="ml-auto">${user.role}</span></li>
-                    <li class="list-group-item d-flex">Address: <span class="ml-auto">${user.address!'address'}</span>
+                                class="ml-auto">${userProfile.birthdate!'birthdate'}</span></li>
+                    <li class="list-group-item d-flex">Role: <span class="ml-auto">${userProfile.role}</span></li>
+                    <li class="list-group-item d-flex">Address: <span
+                                class="ml-auto">${userProfile.address!'address'}</span>
                     </li>
-                    <a href="${user.id}/news">
+                    <a href="${userProfile.id}/news">
                         <li class="list-group-item d-flex">All news: <span
-                                    class="ml-auto">${user.newsCount!'news count'}</span></li>
+                                    class="ml-auto">${userProfile.newsCount!'news count'}</span></li>
                     </a>
                 </ul>
             </#if>
@@ -41,12 +42,14 @@
                                 No value presented for field About me!
                             </div>
                         </#if>
-                        <p>${user.abMe!'no info!'}</p>
+                        <p>${userProfile.abMe!'no info!'}</p>
                         <div class="row ml-auto px-3">
-                            <button type="button" class="btn ml-auto mr-1 btn-primary" data-toggle="modal"
-                                    data-target="#editAbMeModal">
-                                edit
-                            </button>
+                            <#if user.id == userProfile.id>
+                                <button type="button" class="btn ml-auto mr-1 btn-primary" data-toggle="modal"
+                                        data-target="#editAbMeModal">
+                                    edit
+                                </button>
+                            </#if>
                         </div>
                     </div>
                 </div>
@@ -71,7 +74,8 @@
                                        style="max-height: 200px; text-decoration: none;">
                                         <div class="row no-gutters">
                                             <div class="col-2">
-                                                <img src="/img/${news.image}" class="card-img" alt="no-image">
+                                                <img src="/img/${news.image!'no-image.jpg'}" class="card-img"
+                                                     alt="no-image">
                                             </div>
                                             <div class="col-10" style="width: 100%;">
                                                 <div class="card-body">
@@ -83,10 +87,12 @@
                                     </a>
                                 </#list>
                                 <div class="row ml-auto px-3">
-                                    <button type="button" class="btn ml-auto d-flex mr-1 btn-primary"
-                                            data-toggle="modal" data-target="#addNewsModal">
-                                        Add news
-                                    </button>
+                                    <#if user.id == userProfile.id>
+                                        <button type="button" class="btn ml-auto d-flex mr-1 btn-primary"
+                                                data-toggle="modal" data-target="#addNewsModal">
+                                            Add news
+                                        </button>
+                                    </#if>
                                 </div>
                             </div>
                         </div>
@@ -106,7 +112,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="/edit-about-me/${user.id}">
+                    <form method="post" action="/edit-about-me/${userProfile.id}">
                         <#if _csrf??>
                             <input type="hidden" class="field" name="${(_csrf.parameterName)!'csrf'}"
                                    value="${(_csrf.token)!'--no-token--'}"/>
@@ -138,7 +144,7 @@
                             <input type="hidden" class="field" name="${(_csrf.parameterName)!'csrf'}"
                                    value="${(_csrf.token)!'--no-token--'}"/>
                         </#if>
-                        <input name="userId" value="${user.id}" hidden>
+                        <input name="userId" value="${userProfile.id}" hidden>
                         <div class="form-group">
                             <label for="title-text" class="col-form-label">Title:</label>
                             <input class="form-control" name="title" id="title-text">

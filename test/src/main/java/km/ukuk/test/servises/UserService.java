@@ -1,5 +1,6 @@
 package km.ukuk.test.servises;
 
+import javassist.NotFoundException;
 import km.ukuk.test.dto.UserDTO;
 import km.ukuk.test.repositories.UserRepo;
 import lombok.AccessLevel;
@@ -21,8 +22,9 @@ public class UserService {
         }
     }
 
-    public UserDTO getById(int i) {
-        return UserDTO.from(userRepo.findById(i).get());
+    public UserDTO getById(int i) throws NotFoundException {
+        var user = userRepo.findById(i).orElseThrow(() -> new NotFoundException("User not found!"));
+        return UserDTO.from(user);
     }
 
     public boolean updateAbMe(String abMe, int id) {

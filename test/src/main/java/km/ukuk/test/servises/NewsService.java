@@ -1,5 +1,6 @@
 package km.ukuk.test.servises;
 
+import javassist.NotFoundException;
 import km.ukuk.test.dto.NewsAddForm;
 import km.ukuk.test.dto.NewsDTO;
 import km.ukuk.test.models.News;
@@ -39,8 +40,8 @@ public class NewsService {
         return newsRepo.findAllByDateBefore(date, pageable).stream().map(NewsDTO::from).collect(Collectors.toList());
     }
 
-    public NewsDTO getById(int id) {
-        var news = NewsDTO.from(newsRepo.findById(id).get());
+    public NewsDTO getById(int id) throws NotFoundException {
+        var news = NewsDTO.from(newsRepo.findById(id).orElseThrow(() -> new NotFoundException("News not found!")));
         String principal = SecurityContextHolder.getContext().getAuthentication().getName();
         if (principal.equals(news.getUser().getLogin())) news.setAuthor(true);
         return news;

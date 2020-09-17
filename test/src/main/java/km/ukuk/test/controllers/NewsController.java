@@ -1,6 +1,8 @@
 package km.ukuk.test.controllers;
 
+import javassist.NotFoundException;
 import km.ukuk.test.dto.NewsAddForm;
+import km.ukuk.test.dto.NewsDTO;
 import km.ukuk.test.servises.NewsService;
 import km.ukuk.test.servises.UserService;
 import lombok.AccessLevel;
@@ -33,9 +35,15 @@ public class NewsController {
     @GetMapping("/news/{id}")
     public String oneNews(Model model, Principal principal, @PathVariable("id") int id) {
         userService.addPrincipal(model, principal);
-        var news = newsService.getById(id);
-        model.addAttribute("news", news);
-        return "news";
+        NewsDTO news = null;
+        try {
+            news = newsService.getById(id);
+            model.addAttribute("news", news);
+            return "news";
+        } catch (NotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        return "redirect:/forbidden";
     }
 
     @GetMapping("/archive-news")

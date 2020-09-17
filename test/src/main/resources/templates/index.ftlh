@@ -10,7 +10,7 @@
                     <a href="/news/${news.id}" class="card mb-3 mr-1" style="max-width: 540px; text-decoration: none;">
                         <div class="row no-gutters">
                             <div class="col-md-4 col-sm-2">
-                                <img src="/img/${news.image}" class="card-img" alt="no-image">
+                                <img src="/img/${news.image!'no-image.jpg'}" class="card-img" alt="no-image">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
