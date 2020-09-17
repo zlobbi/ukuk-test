@@ -1,7 +1,9 @@
 package km.ukuk.test.controllers;
 
 import javassist.NotFoundException;
+import km.ukuk.test.dto.UserAddForm;
 import km.ukuk.test.dto.UserDTO;
+import km.ukuk.test.models.Role;
 import km.ukuk.test.servises.NewsService;
 import km.ukuk.test.servises.UserService;
 import lombok.AccessLevel;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
@@ -32,7 +35,8 @@ public class UserController {
     @GetMapping("/users/{id}")
     public String profile(Model model, Principal principal, @PathVariable("id") int id) {
         userService.addPrincipal(model, principal);
-        UserDTO user = null;
+        userService.addAddAdminParams(model, principal);
+        UserDTO user;
         try {
             user = userService.getById(id);
             var userLastNews = newsService.getUserLastNews(id);
@@ -56,9 +60,20 @@ public class UserController {
 
     }
 
-    @GetMapping("/forbidden")
-    public String forbidden() {
-        return "forbidden";
+    @GetMapping("/add-user")
+    public String addUser(Model model, Principal principal) {
+        userService.addPrincipal(model, principal);
+        model.addAttribute("user-form", new UserAddForm());
+        model.addAttribute("roles", Role.values());
+        return "add-user";
+    }
+
+    @PostMapping("/add-user")
+    public String addUser(@Valid UserAddForm form, RedirectAttributes attributes) {
+        attributes.addFlashAttribute("user-form", form);
+        var isAdded = userService.addNewUser(form);
+
+        return "add-user";
     }
 
 }

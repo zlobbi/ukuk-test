@@ -36,4 +36,10 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/forbidden")
+    public String forbidden() {
+        return "forbidden";
+    }
+
+
 }

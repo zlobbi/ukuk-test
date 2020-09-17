@@ -32,6 +32,10 @@
                        aria-controls="nav-home" aria-selected="true">About me</a>
                     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-news" role="tab"
                        aria-controls="nav-profile" aria-selected="false">Last news</a>
+                    <#if users??>
+                        <a class="nav-item nav-link" id="nav-users-tab" data-toggle="tab" href="#nav-users" role="tab"
+                           aria-controls="nav-users" aria-selected="false">Users</a>
+                    </#if>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -98,6 +102,36 @@
                         </div>
                     </#if>
                 </div>
+                <#if users??>
+                    <div class="tab-pane fade" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab">
+                        <div class="p-4 my-3 border rounded">
+                            <div class="card card-body" style="padding: 2px">
+                                <table class="table" style="margin: 0; border-radius: 3%; text-align: center">
+                                    <th style="font-weight: bolder; font-size: 16px"> Login</th>
+                                    <th style="font-weight: bolder; font-size: 16px"> Full name</th>
+                                    <th style="font-weight: bolder; font-size: 16px"> Birthdate</th>
+                                    <th style="font-weight: bolder; font-size: 16px"> Role</th>
+                                    <th style="font-weight: bolder; font-size: 16px"> Address</th>
+                                    <#list users as u>
+                                        <tbody>
+                                        <tr class="user-details" onclick="location.href='/user/${u.id}/update'">
+                                            <td>${u.login!'no-login'}</td>
+                                            <td>${u.name!'no-name'} ${user.surname!'no-surname'}</td>
+                                            <td>${u.birthdate}</td>
+                                            <td>${u.role!"no-role"}</td>
+                                            <td>${u.address!"no-address"}</td>
+                                        </tr>
+                                        </tbody>
+                                    </#list>
+                                </table>
+                            </div>
+                            <div class="text-center">
+                                <a class="btn btn-info justify-content-center" role="button" href="/add-user"
+                                   style="font-size: 15px; width: 30%; margin: 10px"> Add user </a>
+                            </div>
+                        </div>
+                    </div>
+                </#if>
             </div>
         </div>
     </div>
@@ -118,11 +152,11 @@
                                    value="${(_csrf.token)!'--no-token--'}"/>
                         </#if>
                         <div class="form-group">
-                            <label for="message-text" class="col-form-label">About me:</label>
-                            <textarea class="form-control" name="abMe" id="message-text"></textarea>
+                            <label for="abMe-text" class="col-form-label">About me:</label>
+                            <textarea class="form-control" name="abMe" id="abMe-text"></textarea>
                         </div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add news</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </form>
                 </div>
             </div>
@@ -154,7 +188,7 @@
                             <input type="file" id="image" name="image">
                         </div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Send message</button>
+                        <button type="submit" class="btn btn-primary">Add news</button>
                     </form>
                 </div>
             </div>

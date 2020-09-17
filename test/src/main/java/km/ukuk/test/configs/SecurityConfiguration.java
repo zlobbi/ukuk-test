@@ -41,7 +41,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 
         http.authorizeRequests()
                 .antMatchers("/login", "/css/**", "/img/**", "/").permitAll()
-
+                .antMatchers("/news-add", "/edit-about-me/**").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers("/add-user", "/update-user").hasAuthority("ADMIN")
+//                .antMatchers("/**").authenticated()
                 .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
     }
