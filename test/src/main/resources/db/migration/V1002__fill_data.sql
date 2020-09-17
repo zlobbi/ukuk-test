@@ -1,5 +1,5 @@
-insert into users (name, login, password, birthdate, image) values ('admin', 'admin', '$2a$10$7zUsHnbwiASdnEGyO31bweOZ0MqNSVJmy6rUahhSYqctojoIB01nu', '1990-03-18', 'no-image-profile.png');
-insert into users (name, login, password, birthdate, image) values ('user', 'user', '$2a$10$7zUsHnbwiASdnEGyO31bweOZ0MqNSVJmy6rUahhSYqctojoIB01nu', '1990-03-18', 'no-image-profile.png');
+insert into users (name, login, password, birthdate, image) values ('admin', 'admin', '$2a$10$cI9TB1z/Jn0z2csS4xi7qOZpEQYdyUTiukkoRq61Ql5RuNHDUFU3i', '1990-03-18', 'no-image-profile.png');
+insert into users (name, login, password, birthdate, image) values ('user', 'user', '$2a$10$IFacm/muT0hcpw3wOozfMepC/kmm9GjyHDVu3o79vujwBLKsjR/cq', '1990-03-18', 'no-image-profile.png');
 
 insert into user_roles (user_id, roles) values (1, 'ADMIN');
 insert into user_roles (user_id, roles) values (2, 'USER');

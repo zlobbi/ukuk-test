@@ -44,7 +44,7 @@
                         </#if>
                         <p>${userProfile.abMe!'no info!'}</p>
                         <div class="row ml-auto px-3">
-                            <#if user.id == userProfile.id>
+                            <#if user?? && user.id == userProfile.id>
                                 <button type="button" class="btn ml-auto mr-1 btn-primary" data-toggle="modal"
                                         data-target="#editAbMeModal">
                                     edit
@@ -87,7 +87,7 @@
                                     </a>
                                 </#list>
                                 <div class="row ml-auto px-3">
-                                    <#if user.id == userProfile.id>
+                                    <#if user?? && user.id == userProfile.id>
                                         <button type="button" class="btn ml-auto d-flex mr-1 btn-primary"
                                                 data-toggle="modal" data-target="#addNewsModal">
                                             Add news
@@ -122,7 +122,7 @@
                             <textarea class="form-control" name="abMe" id="message-text"></textarea>
                         </div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Send message</button>
+                        <button type="submit" class="btn btn-primary">Add news</button>
                     </form>
                 </div>
             </div>

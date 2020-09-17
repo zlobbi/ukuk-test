@@ -53,6 +53,7 @@ public class NewsController {
         var archiveNews = newsService.getArchiveNews(LocalDate.now(), pageable);
         userService.addPrincipal(model, principal);
         if (archiveNews.hasContent()) {
+            model.addAttribute("title", "archive");
             model.addAttribute("archiveNews", archiveNews);
             model.addAttribute("url", uri);
         }
@@ -67,6 +68,8 @@ public class NewsController {
         var userNews = newsService.getUserNewsPageable(userId, pageable);
         userService.addPrincipal(model, principal);
         if (userNews.hasContent()) {
+            String author = userNews.getContent().get(1).getUser().getLogin();
+            model.addAttribute("title", author);
             model.addAttribute("archiveNews", userNews);
             model.addAttribute("url", uri);
         }

@@ -5,6 +5,7 @@
 
     <div class="container my-5">
         <#if archiveNews??>
+            <h3 class="text-uppercase text-center">${title} news!</h3>
             <div class="row row-cols-1 justify-content-between row-cols-md-3">
                 <#list archiveNews.content as news>
                     <a href="/news/${news.id}" class="card mb-3 mr-1" style="max-width: 540px; text-decoration: none;">

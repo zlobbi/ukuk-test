@@ -41,8 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 
         http.authorizeRequests()
                 .antMatchers("/login", "/css/**", "/img/**", "/").permitAll()
-                .antMatchers("/**")
-                .authenticated()
+
                 .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
     }
