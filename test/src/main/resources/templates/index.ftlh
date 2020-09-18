@@ -4,6 +4,7 @@
 <@main.renderWith styles=["/css/cards.css"]>
 
     <div class="container my-5">
+        <h3 class="text-uppercase text-center">Today news.</h3>
         <#if todayNews??>
             <div class="row row-cols-1 justify-content-between row-cols-md-3">
                 <#list todayNews.content as news>
@@ -35,8 +36,8 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     <#list lastArchiveNews as an>
-                        <a href="/news/${an.id}">
-                            <li class="list-group-item archive-clip">${an.descr}</li>
+                        <a href="/news/${an.id}" >
+                            <li class="user-details list-group-item archive-clip">${an.descr}</li>
                         </a>
                     </#list>
                 </ul>

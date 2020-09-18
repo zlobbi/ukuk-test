@@ -49,7 +49,7 @@
                         <p>${userProfile.abMe!'no info!'}</p>
                         <div class="row ml-auto px-3">
                             <#if user?? && user.id == userProfile.id>
-                                <button type="button" class="btn ml-auto mr-1 btn-primary" data-toggle="modal"
+                                <button type="button" class="btn ml-auto mr-1 btn-info" data-toggle="modal"
                                         data-target="#editAbMeModal">
                                     edit
                                 </button>
@@ -95,7 +95,7 @@
                         </#if>
                         <div class="row ml-auto px-3">
                             <#if user?? && user.id == userProfile.id>
-                                <button type="button" class="btn ml-auto d-flex mr-1 btn-primary"
+                                <button type="button" class="btn ml-auto d-flex mr-1 btn-info"
                                         data-toggle="modal" data-target="#addNewsModal">
                                     Add news
                                 </button>
@@ -157,7 +157,7 @@
                             <textarea class="form-control" name="abMe" id="abMe-text"></textarea>
                         </div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-info">Update</button>
                     </form>
                 </div>
             </div>
@@ -189,7 +189,7 @@
                             <input type="file" id="image" name="image">
                         </div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add news</button>
+                        <button type="submit" class="btn btn-info">Add news</button>
                     </form>
                 </div>
             </div>

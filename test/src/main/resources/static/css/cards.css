@@ -6,7 +6,11 @@
 }
 
 .user-details:hover {
-    background-color: #39ace7;
+    background-color: #17a2b8;
     color: #fff3cd;
     cursor: pointer;
+}
+
+a:hover {
+    text-decoration: none;
 }
