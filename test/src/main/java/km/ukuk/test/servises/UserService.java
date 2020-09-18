@@ -5,7 +5,6 @@ import km.ukuk.test.dto.UserAddForm;
 import km.ukuk.test.dto.UserDTO;
 import km.ukuk.test.models.Role;
 import km.ukuk.test.models.User;
-import km.ukuk.test.repositories.NewsRepo;
 import km.ukuk.test.repositories.UserRepo;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,7 +22,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserService {
     private UserRepo userRepo;
-    private NewsRepo newsRepo;
     private PasswordEncoder encoder;
 
     public void addPrincipal(Model model, Principal principal) {
@@ -35,7 +33,6 @@ public class UserService {
                 SecurityContextHolder.clearContext();
                 e.printStackTrace();
             }
-            var userDTO = UserDTO.from(user);
             model.addAttribute("user", user);
         }
     }
