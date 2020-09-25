@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>km.ukuk</groupId>
-    <artifactId>test</artifactId>
+    <artifactId>ukuk-test</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>test</name>
     <description>Project for Spring Boot</description>
